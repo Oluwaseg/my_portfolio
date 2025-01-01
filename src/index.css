@@ -1,0 +1,36 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-body: 'Cabinet Grotesk', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Clash Display', Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: var(--font-body);
+  @apply bg-primary-50 dark:bg-gray-800;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
