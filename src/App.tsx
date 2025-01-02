@@ -2,6 +2,10 @@ import React from 'react';
 import About from './components/About';
 import Hero from './components/common/Hero';
 import Navbar from './components/common/Navbar';
+import Contact from './components/Contact';
+import Education from './components/Education';
+import Footer from './components/Footer';
+import Projects from './components/Projects';
 
 const App: React.FC = () => {
   return (
@@ -9,6 +13,10 @@ const App: React.FC = () => {
       <Navbar />
       <Hero />
       <About />
+      <Education />
+      <Projects />
+      <Contact />
+      <Footer />
     </div>
   );
 };

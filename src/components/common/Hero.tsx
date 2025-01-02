@@ -9,7 +9,7 @@ import {
 import { Github, Hand, Linkedin, Twitter } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useTypewriter } from '../../hook/useTypewriter';
-import HeroBG from './HeroBG';
+import ThreeDBackground from '../3D/ThreeDBackground';
 
 const roles = [
   'Full Stack Developer',
@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className='relative min-h-screen flex items-center justify-center overflow-hidden pt-24 p-2'>
-      <HeroBG />
+      <ThreeDBackground type='hero' />
       <div className='container mx-auto px-4'>
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           <motion.div
