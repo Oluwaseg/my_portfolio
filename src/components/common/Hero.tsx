@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
             className='text-center lg:text-left'
           >
-            <h1 className='text-4xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-gray-100'>
+            <h1 className='text-4xl lg:text-6xl font-bold mb-6 text-gray-100 '>
               Hi <Hand className='inline-block animate-wave' />, I'm{' '}
               <motion.span
                 className='text-primary-600 dark:text-primary-400'
@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
               </motion.span>
             </h1>
             <motion.p
-              className='text-xl lg:text-2xl mb-4 text-gray-700 dark:text-gray-300 min-h-[2.5rem]'
+              className='text-xl lg:text-2xl mb-4 text-gray-100 min-h-[2.5rem]'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1 }}
@@ -80,26 +80,34 @@ const Hero: React.FC = () => {
               {currentRole}
             </motion.p>
             <motion.p
-              className='text-base lg:text-lg mb-8 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto'
+              className='text-base lg:text-lg mb-8 text-gray-100  max-w-2xl mx-auto'
               initial={{ opacity: 0 }}
               animate={descriptionControls}
               transition={{ duration: 0.5, delay: 1.5 }}
               style={{ zIndex: 10 }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              voluptas maxime, sit, nulla unde explicabo ex obcaecati minima
-              vero aperiam eos, corporis consequatur facere quos aut modi?
-              Voluptas, ipsam est?
+              I'm a developer who loves bringing ideas to life by solving
+              problems with clean, efficient code. With experience in both
+              frontend and backend technologies, I focus on creating seamless,
+              high-performing web applications that deliver real value. Whether
+              working on a complex backend system or designing an intuitive user
+              interface, my goal is always the same: to build solutions that are
+              not only functional but also scalable and easy to use. Let’s make
+              something great together.
             </motion.p>
+
             <Button
               size='lg'
-              className='mb-6 hover:scale-105 transition-transform'
+              className='text-lg mb-6 hover:scale-105 transition-transform bg-white/5 text-white hover:bg-white/10 hover:text-primary-400 font-medium'
             >
               Download CV
             </Button>
             <div className='flex justify-center lg:justify-start space-x-6 mt-8'>
-              <SocialIcon href='#' icon={Github} />
-              <SocialIcon href='#' icon={Linkedin} />
+              <SocialIcon href='https://github.com/oluwaseg' icon={Github} />
+              <SocialIcon
+                href='https://linkedin.com/in/samuel-oluwasegun-39ab37253'
+                icon={Linkedin}
+              />
               <SocialIcon href='#' icon={Twitter} />
             </div>
           </motion.div>
@@ -115,7 +123,7 @@ const Hero: React.FC = () => {
             }}
           >
             <motion.div
-              className='relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl'
+              className='relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden '
               style={{
                 x,
                 y,
@@ -127,7 +135,7 @@ const Hero: React.FC = () => {
                 transition: { duration: 0.2 },
               }}
             >
-              <div className='absolute inset-0 border-4 border-primary-500 shadow-2xl opacity-0 hover:opacity-20 transition-opacity duration-300' />
+              <div className='absolute inset-0  opacity-0 hover:opacity-20 transition-opacity duration-300' />
               <motion.img
                 src='https://sos-tech.netlify.app/assets/team-b6y8WSTK.jpg'
                 alt='Profile'
@@ -155,7 +163,7 @@ const SocialIcon: React.FC<{ href: string; icon: React.ElementType }> = ({
     rel='noopener noreferrer'
     whileHover={{ scale: 1.1, y: -3 }}
     whileTap={{ scale: 0.9 }}
-    className='text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors'
+    className='text-gray-50/50 hover:text-primary-400 transition-colors'
   >
     <Icon size={24} />
   </motion.a>

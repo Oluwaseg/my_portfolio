@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-primary-100 dark:bg-gray-800 py-8'>
+    <footer className=' py-8'>
       <div className='container mx-auto px-4'>
         <div className='flex flex-col md:flex-row justify-between items-center'>
           <motion.div
@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className='text-gray-600 dark:text-gray-400 text-sm'>
+            <p className='text-gray-100 text-sm'>
               © {currentYear} Your Name. All rights reserved.
             </p>
           </motion.div>
@@ -35,16 +35,6 @@ const Footer: React.FC = () => {
             />
           </motion.div>
         </div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className='mt-8 text-center'
-        >
-          <p className='text-gray-500 dark:text-gray-400 text-sm'>
-            Made with ❤️ using React,Shadcn, Tailwind CSS, and Framer Motion
-          </p>
-        </motion.div>
       </div>
     </footer>
   );
@@ -58,7 +48,7 @@ const SocialLink: React.FC<{ href: string; icon: React.ElementType }> = ({
     href={href}
     target='_blank'
     rel='noopener noreferrer'
-    className='text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors'
+    className='text-gray-100 hover:text-primary-600 transition-colors'
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
   >

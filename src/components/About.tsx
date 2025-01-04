@@ -3,52 +3,51 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Download } from 'lucide-react';
 import React from 'react';
 import ThreeDBackground from './3D/ThreeDBackground';
 
 const skills = [
+  'JavaScript',
+  'TypeScript',
   'React',
   'Next.js',
-  'Tailwind CSS',
-  'Redux',
   'Node.js',
-  'GitHub',
-  'TypeScript',
-  'MongoDB',
   'Express.js',
-  'WordPress',
+  'MongoDB',
+  'PostgreSQL',
+  'Tailwind CSS',
+  'Framer Motion',
+  'Three.js',
   'SEO',
-  'GraphQL',
-  'Docker',
-  'AWS',
-  'Jest',
+  'WordPress',
 ];
 
 const About: React.FC = () => {
   return (
-    <section
-      id='about'
-      className='py-20 bg-primary-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-    >
-      <div className='max-w-7xl mx-auto px-4'>
+    <section id='about' className='relative py-20 min-h-screen overflow-hidden'>
+      <div className='absolute inset-0 z-0 pointer-events-none'>
+        <ThreeDBackground type='edu' />
+      </div>
+
+      <div className='container mx-auto px-4 relative z-10'>
         <motion.h2
-          className='text-4xl md:text-5xl font-bold mb-16 text-center text-primary-600 dark:text-primary-400'
+          className='text-5xl md:text-6xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400 dark:from-primary-400 dark:to-primary-200'
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           About Me
         </motion.h2>
-        <div className='flex flex-col lg:flex-row gap-20 items-center'>
+        <div className='flex flex-col lg:flex-row gap-12 items-center lg:items-start'>
           <motion.div
-            className='relative w-64 h-64 lg:w-96 lg:h-96'
+            className='relative w-64 h-64 lg:w-96 lg:h-96 flex-shrink-0'
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className='absolute inset-0 bg-primary-400 rounded-full blur-md'></div>
-            <Avatar className='w-full h-full border-4 border-primary-500'>
+            <div className='absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg'></div>
+            <Avatar className='w-full h-full border-4 border-white dark:border-gray-800 shadow-xl'>
               <AvatarImage
                 src='https://github.com/shadcn.png'
                 alt='Samuel Oluwasegun'
@@ -56,24 +55,24 @@ const About: React.FC = () => {
               <AvatarFallback>SO</AvatarFallback>
             </Avatar>
             <motion.div
-              className='absolute -bottom-20 -right-20'
+              className='absolute -bottom-20 -right-20 z-10'
               initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <ThreeDBackground type='cube' width={250} height={250} />
+              <ThreeDBackground type='cube' width={200} height={200} />
             </motion.div>
           </motion.div>
           <motion.div
-            className='flex-1'
+            className='flex-1 space-y-8'
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className='bg-white dark:bg-gray-700 border-primary-200 dark:border-primary-600 shadow-custom'>
-              <CardContent className='p-6'>
+            <Card className='bg-white/5 dark:bg-gray-800/80 backdrop-blur-0 border-primary-700  shadow-md'>
+              <CardContent className='p-6 space-y-6'>
                 <motion.p
-                  className='text-lg leading-7 mb-6 text-gray-700 dark:text-gray-300'
+                  className='text-lg leading-relaxed text-gray-100 font-semibold'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -85,7 +84,7 @@ const About: React.FC = () => {
                   client needs.
                 </motion.p>
                 <motion.p
-                  className='text-lg leading-7 mb-6 text-gray-700 dark:text-gray-300'
+                  className='text-lg leading-relaxed text-gray-100 font-semibold'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -97,52 +96,53 @@ const About: React.FC = () => {
                   experiences.
                 </motion.p>
                 <motion.p
-                  className='text-lg leading-7 mb-8 text-gray-700 dark:text-gray-300'
+                  className='text-lg leading-relaxed text-gray-100 font-semibold'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
                   Let's connect and build something amazing together!
                 </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1 }}
-                >
-                  <h3 className='font-bold text-2xl mb-4 text-primary-600 dark:text-primary-400'>
-                    My Skills
-                  </h3>
-                  <div className='flex flex-wrap gap-2 mb-6'>
-                    {skills.map((skill, index) => (
-                      <motion.div
-                        key={skill}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        <Badge
-                          variant='secondary'
-                          className='bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700'
-                        >
-                          {skill}
-                        </Badge>
-                      </motion.div>
-                    ))}
-                  </div>
-                  <div className='flex gap-4'>
-                    <Button className='bg-primary-500 hover:bg-primary-600 text-white'>
-                      Contact <ChevronRight className='ml-2 h-4 w-4' />
-                    </Button>
-                    <Button
-                      variant='outline'
-                      className='border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-800'
-                    >
-                      Resume <ChevronRight className='ml-2 h-4 w-4' />
-                    </Button>
-                  </div>
-                </motion.div>
               </CardContent>
             </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1 }}
+              className='space-y-6'
+            >
+              <h3 className='font-bold text-3xl mb-4 text-primary-600 dark:text-primary-400'>
+                My Skills
+              </h3>
+              <div className='flex flex-wrap gap-3'>
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <Badge
+                      variant='secondary'
+                      className='cursor-pointer text-sm py-1 px-3 bg-gray-100/5 text-white hover:text-primary-600 hover:bg-white/0 hover:border hover:border-primary-600 transition-colors duration-200'
+                    >
+                      {skill}
+                    </Badge>
+                  </motion.div>
+                ))}
+              </div>
+              <div className='flex gap-4 pt-4'>
+                <Button className='font-semibold text-md bg-primary-500/5 hover:bg-gray-100/5 hover:text-primary-600 text-white shadow-md hover:shadow-lg transition-all duration-200'>
+                  Contact <ChevronRight className='ml-2 h-4 w-4' />
+                </Button>
+                <Button
+                  variant='outline'
+                  className=' text-gray-50 bg-gray-50/2 transition-all duration-200'
+                >
+                  Resume <Download className='ml-2 h-4 w-4' />
+                </Button>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

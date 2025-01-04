@@ -68,6 +68,16 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     if (type === 'hero') {
       const light = new THREE.AmbientLight(0x404040, 2);
       scene.add(light);
+
+      // Apply dark mode directly since you're using it by default
+      const primaryColor = '#2186EB';
+      const darkBackground = '#111827';
+      (object.material as THREE.PointsMaterial).color.setHex(
+        parseInt(primaryColor.replace('#', ''), 16)
+      );
+      (object.material as THREE.PointsMaterial).opacity = 0.3; // Dark mode opacity
+      scene.background = new THREE.Color(darkBackground); // Dark mode background
+      (scene.children[1] as THREE.AmbientLight).color.setHex(0xffffff); // White light in dark mode
     }
 
     const animate = () => {
@@ -91,40 +101,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     };
 
     window.addEventListener('resize', handleResize);
-
-    if (type === 'hero') {
-      const updateAppearance = () => {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        const primaryColor = '#2186EB';
-        const darkBackground = '#242424';
-        const lightBackground = '#E6F6FF';
-        (object.material as THREE.PointsMaterial).color.setHex(
-          parseInt(primaryColor.replace('#', ''), 16)
-        );
-        (object.material as THREE.PointsMaterial).opacity = isDarkMode
-          ? 0.3
-          : 0.8;
-        scene.background = new THREE.Color(
-          isDarkMode ? darkBackground : lightBackground
-        );
-        (scene.children[1] as THREE.AmbientLight).color.setHex(
-          isDarkMode ? 0xffffff : 0x000000
-        );
-      };
-
-      updateAppearance();
-      const observer = new MutationObserver(updateAppearance);
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-      });
-
-      return () => {
-        observer.disconnect();
-        window.removeEventListener('resize', handleResize);
-        mountRef.current?.removeChild(renderer.domElement);
-      };
-    }
 
     return () => {
       window.removeEventListener('resize', handleResize);

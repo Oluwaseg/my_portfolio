@@ -2,7 +2,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Briefcase, Home, Mail, Menu, User, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import ThemeToggle from '../ThemeToggle';
 
 const navItems = [
   { name: 'Home', icon: Home },
@@ -21,7 +20,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-primary-50/80 dark:bg-gray-900/80 backdrop-blur-md shadow-custom'>
+    <nav className='fixed top-0 left-0 right-0 z-50 bg-gray-900 backdrop-blur-md shadow-custom'>
       <div className='container mx-auto px-6'>
         <div className='flex items-center justify-between h-20'>
           <motion.div
@@ -35,33 +34,32 @@ const Navbar: React.FC = () => {
               alt='Logo'
               className='h-10 w-10 rounded-full'
             />
-            <span className='text-2xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight'>
+            <span className='text-2xl md:text-3xl font-extrabold text-primary-600  tracking-tight'>
               SOS Tech
             </span>
           </motion.div>
           <div className='hidden md:block'>
-            <div className='ml-10 flex items-baseline space-x-6'>
+            <div className='ml-10 flex items-center space-x-8'>
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
-                  href={`#${item.name.toLowerCase()}`}
-                  className='text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200'
+                  href={
+                    item.name === 'Home' ? '#' : `#${item.name.toLowerCase()}`
+                  }
+                  className='flex items-center text-gray-100 hover:text-primary-600  px-3 py-2 rounded-md text-sm md:text-base font-medium tracking-wide transition-colors duration-200'
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  {item.name}
+                  <item.icon className='mr-2 h-5 w-5' />
+                  <span>{item.name}</span>
                 </motion.a>
               ))}
             </div>
           </div>
-          <div className='hidden md:block'>
-            <ThemeToggle />
-          </div>
           <div className='md:hidden flex items-center'>
-            <ThemeToggle />
             <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
               <Dialog.Trigger asChild>
                 <motion.button
@@ -104,7 +102,7 @@ const Navbar: React.FC = () => {
                         className='h-full flex flex-col pt-6 pb-8 px-6'
                       >
                         <div className='flex justify-between items-center'>
-                          <Dialog.Title className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+                          <Dialog.Title className='text-xl font-bold text-gray-900 dark:text-gray-100 tracking-tight'>
                             Menu
                           </Dialog.Title>
                           <Dialog.Close asChild>
@@ -123,8 +121,12 @@ const Navbar: React.FC = () => {
                           {navItems.map((item) => (
                             <motion.a
                               key={item.name}
-                              href={`#${item.name.toLowerCase()}`}
-                              className='flex items-center px-3 py-3 text-lg font-medium rounded-lg text-gray-900 dark:text-gray-100 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors duration-200'
+                              href={
+                                item.name === 'Home'
+                                  ? '#'
+                                  : `#${item.name.toLowerCase()}`
+                              }
+                              className='flex items-center px-3 py-3 text-lg font-semibold rounded-lg text-gray-900 dark:text-gray-100 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors duration-200'
                               whileHover={{ scale: 1.03, x: 5 }}
                               whileTap={{ scale: 0.98 }}
                               onClick={() => setIsOpen(false)}
