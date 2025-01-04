@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-gray-900 backdrop-blur-md shadow-custom'>
+    <nav className='fixed top-0 left-0 right-0 z-[100] bg-gray-900 backdrop-blur-md shadow-custom'>
       <div className='container mx-auto px-6'>
         <div className='flex items-center justify-between h-20'>
           <motion.div
@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
               alt='Logo'
               className='h-10 w-10 rounded-full'
             />
-            <span className='text-2xl md:text-3xl font-extrabold text-primary-600  tracking-tight'>
+            <span className='text-2xl md:text-3xl font-extrabold text-primary-400 tracking-tight'>
               SOS Tech
             </span>
           </motion.div>
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
                   href={
                     item.name === 'Home' ? '#' : `#${item.name.toLowerCase()}`
                   }
-                  className='flex items-center text-gray-100 hover:text-primary-600  px-3 py-2 rounded-md text-sm md:text-base font-medium tracking-wide transition-colors duration-200'
+                  className='flex items-center text-white hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm md:text-base font-medium tracking-wide transition-colors duration-200'
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: -20 }}
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className='ml-4 inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500'
+                  className='ml-4 inline-flex items-center justify-center p-2 rounded-md text-white hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500'
                 >
                   <span className='sr-only'>Open main menu</span>
                   {isOpen ? (
@@ -80,14 +80,14 @@ const Navbar: React.FC = () => {
                   <Dialog.Portal forceMount>
                     <Dialog.Overlay asChild>
                       <motion.div
-                        className='fixed inset-0 bg-black/40 backdrop-blur-sm'
+                        className='fixed inset-0 bg-black/40 backdrop-blur-sm z-[101]'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                       />
                     </Dialog.Overlay>
                     <Dialog.Content
-                      className='fixed inset-0 top-0 left-0 w-full max-w-full bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur-md shadow-xl'
+                      className='fixed inset-0 top-0 left-0 w-full max-w-full bg-gray-900/95 backdrop-blur-md shadow-xl z-[102]'
                       aria-describedby={undefined}
                     >
                       <motion.div
@@ -102,12 +102,12 @@ const Navbar: React.FC = () => {
                         className='h-full flex flex-col pt-6 pb-8 px-6'
                       >
                         <div className='flex justify-between items-center'>
-                          <Dialog.Title className='text-xl font-bold text-gray-900 dark:text-gray-100 tracking-tight'>
+                          <Dialog.Title className='text-xl font-bold text-gray-100 tracking-tight'>
                             Menu
                           </Dialog.Title>
                           <Dialog.Close asChild>
                             <motion.button
-                              className='rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500'
+                              className='rounded-full p-1 text-gray-100  focus:outline-none focus:ring-2 focus:ring-primary-500'
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                             >
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
                                   ? '#'
                                   : `#${item.name.toLowerCase()}`
                               }
-                              className='flex items-center px-3 py-3 text-lg font-semibold rounded-lg text-gray-900 dark:text-gray-100 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors duration-200'
+                              className='flex items-center px-3 py-3 text-lg font-semibold rounded-lg text-gray-100 hover:bg-gray-800/50 transition-colors duration-200'
                               whileHover={{ scale: 1.03, x: 5 }}
                               whileTap={{ scale: 0.98 }}
                               onClick={() => setIsOpen(false)}

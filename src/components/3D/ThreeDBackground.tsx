@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface ThreeDBackgroundProps {
-  type: 'cube' | 'edu' | 'hero';
+  type: 'cube' | 'edu' | 'hero' | 'bg1' | 'bg2';
   width?: number;
   height?: number;
 }
@@ -24,7 +24,8 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
 
-    let object: THREE.Mesh | THREE.Points;
+    let object: THREE.Mesh | THREE.Points | THREE.Group;
+    let waveAnimation: (() => void) | null = null;
 
     switch (type) {
       case 'cube': {
@@ -53,41 +54,148 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
         );
         const particleMaterial = new THREE.PointsMaterial({
           color: 0x2186eb,
-          size: type === 'edu' ? 2 : 1.5,
+          size: 1.5,
           transparent: true,
-          opacity: type === 'edu' ? 0.5 : 1,
+          opacity: 0.3,
         });
         object = new THREE.Points(particleGeometry, particleMaterial);
         camera.position.z = 1000;
+
+        break;
+      }
+      case 'bg1': {
+        const group = new THREE.Group();
+        const particleGeometry = new THREE.BufferGeometry();
+        const vertices = [];
+        for (let i = 0; i < 3000; i++) {
+          const x = (Math.random() - 0.5) * 2000;
+          const y = (Math.random() - 0.5) * 2000;
+          const z = (Math.random() - 0.5) * 2000;
+          vertices.push(x, y, z);
+        }
+        particleGeometry.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(vertices, 3)
+        );
+        const particleMaterial = new THREE.PointsMaterial({
+          color: 0x2186eb,
+          size: 2,
+          transparent: true,
+          opacity: 0.6,
+        });
+        const particles = new THREE.Points(particleGeometry, particleMaterial);
+        group.add(particles);
+
+        // Add some floating geometric shapes
+        const shapes = [
+          new THREE.IcosahedronGeometry(20),
+          new THREE.OctahedronGeometry(15),
+          new THREE.TetrahedronGeometry(25),
+        ];
+        shapes.forEach((geometry) => {
+          const material = new THREE.MeshBasicMaterial({
+            color: 0x2186eb,
+            wireframe: true,
+          });
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(
+            Math.random() * 1000 - 500,
+            Math.random() * 1000 - 500,
+            Math.random() * 1000 - 500
+          );
+          group.add(mesh);
+        });
+
+        object = group;
+        camera.position.z = 1000;
+        break;
+      }
+      case 'bg2': {
+        const group = new THREE.Group();
+
+        // Create a wavy plane
+        const planeGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+        const planeMaterial = new THREE.MeshBasicMaterial({
+          color: 0x2186eb,
+          wireframe: true,
+        });
+        const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+        planeMesh.rotation.x = -Math.PI / 2;
+        group.add(planeMesh);
+
+        // Animate the wavy plane
+        if (type === 'bg2') {
+          waveAnimation = () => {
+            const time = Date.now() * 0.001;
+            const positions = planeGeometry.attributes.position
+              .array as Float32Array;
+            for (let i = 0; i < positions.length; i += 3) {
+              positions[i + 2] =
+                Math.sin(positions[i] / 50 + time) * 20 +
+                Math.sin(positions[i + 1] / 50 + time) * 20;
+            }
+            planeGeometry.attributes.position.needsUpdate = true;
+          };
+        }
+
+        object = group;
+        camera.position.set(0, 400, 1000);
+        camera.lookAt(0, 0, 0);
         break;
       }
     }
 
     scene.add(object);
 
-    if (type === 'hero') {
+    if (type === 'hero' || type === 'bg1' || type === 'bg2') {
       const light = new THREE.AmbientLight(0x404040, 2);
       scene.add(light);
 
-      // Apply dark mode directly since you're using it by default
+      // Apply dark mode directly
       const primaryColor = '#2186EB';
       const darkBackground = '#111827';
-      (object.material as THREE.PointsMaterial).color.setHex(
-        parseInt(primaryColor.replace('#', ''), 16)
-      );
-      (object.material as THREE.PointsMaterial).opacity = 0.3; // Dark mode opacity
-      scene.background = new THREE.Color(darkBackground); // Dark mode background
-      (scene.children[1] as THREE.AmbientLight).color.setHex(0xffffff); // White light in dark mode
+      if (object instanceof THREE.Points) {
+        (object.material as THREE.PointsMaterial).color.setHex(
+          parseInt(primaryColor.replace('#', ''), 16)
+        );
+        (object.material as THREE.PointsMaterial).opacity =
+          type === 'hero' ? 0.6 : 0.3;
+      } else if (object instanceof THREE.Group) {
+        object.traverse((child) => {
+          if (child instanceof THREE.Mesh || child instanceof THREE.Points) {
+            (
+              child.material as THREE.MeshBasicMaterial | THREE.PointsMaterial
+            ).color.setHex(parseInt(primaryColor.replace('#', ''), 16));
+            if (child instanceof THREE.Points) {
+              (child.material as THREE.PointsMaterial).opacity = 0.3;
+            }
+          }
+        });
+      }
+      scene.background = new THREE.Color(darkBackground);
+      (scene.children[1] as THREE.AmbientLight).color.setHex(0xffffff);
     }
 
     const animate = () => {
       requestAnimationFrame(animate);
-      if (type === 'cube') {
-        (object as THREE.Mesh).rotation.x += 0.01;
-        (object as THREE.Mesh).rotation.y += 0.01;
-      } else {
+      if (object instanceof THREE.Mesh) {
+        object.rotation.x += 0.01;
+        object.rotation.y += 0.01;
+      } else if (object instanceof THREE.Points) {
         object.rotation.x += 0.0005;
         object.rotation.y += 0.0005;
+      } else if (object instanceof THREE.Group) {
+        if (type === 'bg1') {
+          object.rotation.y += 0.001;
+          object.children.forEach((child) => {
+            if (child instanceof THREE.Mesh) {
+              child.rotation.x += 0.005;
+              child.rotation.y += 0.005;
+            }
+          });
+        } else if (type === 'bg2' && waveAnimation) {
+          waveAnimation();
+        }
       }
       renderer.render(scene, camera);
     };

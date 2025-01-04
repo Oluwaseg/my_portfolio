@@ -51,8 +51,10 @@ const Hero: React.FC = () => {
 
   return (
     <section className='relative min-h-screen flex items-center justify-center overflow-hidden pt-24 p-2'>
-      <ThreeDBackground type='hero' />
-      <div className='container mx-auto px-4'>
+      <div className='absolute inset-0 z-0'>
+        <ThreeDBackground type='hero' />
+      </div>
+      <div className='container relative z-10 mx-auto px-4'>
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -60,10 +62,10 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
             className='text-center lg:text-left'
           >
-            <h1 className='text-4xl lg:text-6xl font-bold mb-6 text-gray-100 '>
+            <h1 className='text-4xl lg:text-6xl font-bold mb-6 text-white drop-shadow-lg'>
               Hi <Hand className='inline-block animate-wave' />, I'm{' '}
               <motion.span
-                className='text-primary-600 dark:text-primary-400'
+                className='text-primary-400'
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
@@ -72,7 +74,7 @@ const Hero: React.FC = () => {
               </motion.span>
             </h1>
             <motion.p
-              className='text-xl lg:text-2xl mb-4 text-gray-100 min-h-[2.5rem]'
+              className='text-xl lg:text-2xl mb-4 text-white/90 min-h-[2.5rem] drop-shadow-md'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1 }}
@@ -80,11 +82,10 @@ const Hero: React.FC = () => {
               {currentRole}
             </motion.p>
             <motion.p
-              className='text-base lg:text-lg mb-8 text-gray-100  max-w-2xl mx-auto'
+              className='text-base lg:text-lg mb-8 text-white/80 max-w-2xl mx-auto drop-shadow'
               initial={{ opacity: 0 }}
               animate={descriptionControls}
               transition={{ duration: 0.5, delay: 1.5 }}
-              style={{ zIndex: 10 }}
             >
               I'm a developer who loves bringing ideas to life by solving
               problems with clean, efficient code. With experience in both
@@ -92,13 +93,12 @@ const Hero: React.FC = () => {
               high-performing web applications that deliver real value. Whether
               working on a complex backend system or designing an intuitive user
               interface, my goal is always the same: to build solutions that are
-              not only functional but also scalable and easy to use. Let’s make
+              not only functional but also scalable and easy to use. Let's make
               something great together.
             </motion.p>
-
             <Button
               size='lg'
-              className='text-lg mb-6 hover:scale-105 transition-transform bg-white/5 text-white hover:bg-white/10 hover:text-primary-400 font-medium'
+              className='text-lg mb-6 hover:scale-105 transition-transform bg-white/10 text-white hover:bg-white/20 hover:text-primary-400 font-medium backdrop-blur-sm'
             >
               Download CV
             </Button>
@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
             }}
           >
             <motion.div
-              className='relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden '
+              className='relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl'
               style={{
                 x,
                 y,
@@ -135,10 +135,10 @@ const Hero: React.FC = () => {
                 transition: { duration: 0.2 },
               }}
             >
-              <div className='absolute inset-0  opacity-0 hover:opacity-20 transition-opacity duration-300' />
+              <div className='absolute inset-0 border-4 border-primary-500 shadow-2xl opacity-0 hover:opacity-20 transition-opacity duration-300' />
               <motion.img
                 src='https://sos-tech.netlify.app/assets/team-b6y8WSTK.jpg'
-                alt='Profile'
+                alt='Samuel Oluwasegun'
                 className='w-full h-full object-cover object-center'
                 whileHover={{
                   scale: 1.1,
@@ -163,7 +163,7 @@ const SocialIcon: React.FC<{ href: string; icon: React.ElementType }> = ({
     rel='noopener noreferrer'
     whileHover={{ scale: 1.1, y: -3 }}
     whileTap={{ scale: 0.9 }}
-    className='text-gray-50/50 hover:text-primary-400 transition-colors'
+    className='text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors'
   >
     <Icon size={24} />
   </motion.a>
