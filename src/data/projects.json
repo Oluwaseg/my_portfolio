@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "E-commerce Platform",
+    "description": "A full-stack e-commerce solution with React and Node.js",
+    "category": "Full Stack",
+    "image": "https://sos-tech.netlify.app/assets/team-b6y8WSTK.jpg",
+    "technologies": ["React", "Node.js", "MongoDB", "Express"],
+    "githubLink": "https://github.com/yourusername/ecommerce-platform",
+    "liveLink": "https://ecommerce-platform-demo.com"
+  },
+  {
+    "id": 2,
+    "title": "Portfolio Website",
+    "description": "A responsive portfolio website showcasing my work",
+    "category": "Frontend",
+    "image": "https://sos-tech.netlify.app/assets/team-b6y8WSTK.jpg",
+    "technologies": ["React", "Tailwind CSS", "Framer Motion"],
+    "githubLink": "https://github.com/yourusername/portfolio-website",
+    "liveLink": "https://yourportfolio.com"
+  },
+  {
+    "id": 3,
+    "title": "Task Management API",
+    "description": "RESTful API for a task management application",
+    "category": "Backend",
+    "image": "https://sos-tech.netlify.app/assets/team-b6y8WSTK.jpg",
+    "technologies": ["Node.js", "Express", "MongoDB", "JWT"],
+    "githubLink": "https://github.com/yourusername/task-management-api",
+    "liveLink": "https://api-docs-task-management.com"
+  }
+]
