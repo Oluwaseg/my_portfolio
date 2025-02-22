@@ -1,8 +1,5 @@
-'use client';
-
 import { Code, Globe, Laptop, Youtube } from 'lucide-react';
-import type React from 'react';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface ThreeDBackgroundProps {
@@ -88,7 +85,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
         const particles = new THREE.Points(particleGeometry, particleMaterial);
         group.add(particles);
 
-        // Add some floating geometric shapes
         const shapes = [
           new THREE.IcosahedronGeometry(20),
           new THREE.OctahedronGeometry(15),
@@ -114,8 +110,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
       }
       case 'bg2': {
         const group = new THREE.Group();
-
-        // Create a wavy plane
         const planeGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
         const planeMaterial = new THREE.MeshBasicMaterial({
           color: 0x2186eb,
@@ -125,7 +119,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
         planeMesh.rotation.x = -Math.PI / 2;
         group.add(planeMesh);
 
-        // Animate the wavy plane
         waveAnimation = () => {
           const time = Date.now() * 0.001;
           const positions = planeGeometry.attributes.position
@@ -146,35 +139,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     }
 
     scene.add(object);
-
-    if (type === 'hero' || type === 'bg1' || type === 'bg2') {
-      const light = new THREE.AmbientLight(0x404040, 2);
-      scene.add(light);
-
-      // Apply dark mode directly
-      const primaryColor = '#2186EB';
-      const darkBackground = '#111827';
-      if (object instanceof THREE.Points) {
-        (object.material as THREE.PointsMaterial).color.setHex(
-          Number.parseInt(primaryColor.replace('#', ''), 16)
-        );
-        (object.material as THREE.PointsMaterial).opacity =
-          type === 'hero' ? 0.6 : 0.3;
-      } else if (object instanceof THREE.Group) {
-        object.traverse((child) => {
-          if (child instanceof THREE.Mesh || child instanceof THREE.Points) {
-            (
-              child.material as THREE.MeshBasicMaterial | THREE.PointsMaterial
-            ).color.setHex(Number.parseInt(primaryColor.replace('#', ''), 16));
-            if (child instanceof THREE.Points) {
-              (child.material as THREE.PointsMaterial).opacity = 0.3;
-            }
-          }
-        });
-      }
-      scene.background = new THREE.Color(darkBackground);
-      (scene.children[1] as THREE.AmbientLight).color.setHex(0xffffff);
-    }
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -203,11 +167,9 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     animate();
 
     const handleResize = () => {
-      const newWidth = window.innerWidth;
-      const newHeight = window.innerHeight;
-      camera.aspect = newWidth / newHeight;
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(newWidth, newHeight);
+      renderer.setSize(width, height);
     };
 
     window.addEventListener('resize', handleResize);
@@ -218,23 +180,21 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     };
   }, [type, width, height]);
 
-  if (type === 'cube') {
-    return (
-      <div className='relative w-[200px] h-[200px]'>
-        <div ref={mountRef} className='absolute inset-0' />
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <div className='grid grid-cols-2 gap-4'>
-            <Code className='text-primary-400' size={32} />
-            <Globe className='text-primary-400' size={32} />
-            <Laptop className='text-primary-400' size={32} />
-            <Youtube className='text-primary-400' size={32} />
-          </div>
+  return type === 'cube' ? (
+    <div className='relative w-[200px] h-[200px]'>
+      <div ref={mountRef} className='absolute inset-0' />
+      <div className='absolute inset-0 flex items-center justify-center'>
+        <div className='grid grid-cols-2 gap-4'>
+          <Code className='text-primary-400' size={32} />
+          <Globe className='text-primary-400' size={32} />
+          <Laptop className='text-primary-400' size={32} />
+          <Youtube className='text-primary-400' size={32} />
         </div>
       </div>
-    );
-  }
-
-  return <div ref={mountRef} className='absolute inset-0 -z-10' />;
+    </div>
+  ) : (
+    <div ref={mountRef} className='absolute inset-0 -z-10 bg-[#111827]' />
+  );
 };
 
 export default ThreeDBackground;
