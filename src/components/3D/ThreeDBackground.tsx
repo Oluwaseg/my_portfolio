@@ -1,5 +1,8 @@
+'use client';
+
 import { Code, Globe, Laptop, Youtube } from 'lucide-react';
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface ThreeDBackgroundProps {
@@ -60,7 +63,6 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
         });
         object = new THREE.Points(particleGeometry, particleMaterial);
         camera.position.z = 1000;
-
         break;
       }
       case 'bg1': {
@@ -124,19 +126,17 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
         group.add(planeMesh);
 
         // Animate the wavy plane
-        if (type === 'bg2') {
-          waveAnimation = () => {
-            const time = Date.now() * 0.001;
-            const positions = planeGeometry.attributes.position
-              .array as Float32Array;
-            for (let i = 0; i < positions.length; i += 3) {
-              positions[i + 2] =
-                Math.sin(positions[i] / 50 + time) * 20 +
-                Math.sin(positions[i + 1] / 50 + time) * 20;
-            }
-            planeGeometry.attributes.position.needsUpdate = true;
-          };
-        }
+        waveAnimation = () => {
+          const time = Date.now() * 0.001;
+          const positions = planeGeometry.attributes.position
+            .array as Float32Array;
+          for (let i = 0; i < positions.length; i += 3) {
+            positions[i + 2] =
+              Math.sin(positions[i] / 50 + time) * 20 +
+              Math.sin(positions[i + 1] / 50 + time) * 20;
+          }
+          planeGeometry.attributes.position.needsUpdate = true;
+        };
 
         object = group;
         camera.position.set(0, 400, 1000);
@@ -156,7 +156,7 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
       const darkBackground = '#111827';
       if (object instanceof THREE.Points) {
         (object.material as THREE.PointsMaterial).color.setHex(
-          parseInt(primaryColor.replace('#', ''), 16)
+          Number.parseInt(primaryColor.replace('#', ''), 16)
         );
         (object.material as THREE.PointsMaterial).opacity =
           type === 'hero' ? 0.6 : 0.3;
@@ -165,7 +165,7 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
           if (child instanceof THREE.Mesh || child instanceof THREE.Points) {
             (
               child.material as THREE.MeshBasicMaterial | THREE.PointsMaterial
-            ).color.setHex(parseInt(primaryColor.replace('#', ''), 16));
+            ).color.setHex(Number.parseInt(primaryColor.replace('#', ''), 16));
             if (child instanceof THREE.Points) {
               (child.material as THREE.PointsMaterial).opacity = 0.3;
             }
@@ -203,9 +203,11 @@ const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     animate();
 
     const handleResize = () => {
-      camera.aspect = width / height;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
+      renderer.setSize(newWidth, newHeight);
     };
 
     window.addEventListener('resize', handleResize);
