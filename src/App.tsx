@@ -21,8 +21,8 @@ const App: React.FC = () => {
         <Navbar />
         <Hero />
         <About />
-        <Education />
         <Projects />
+        <Education />
         <Contact />
         <Footer />
       </div>
