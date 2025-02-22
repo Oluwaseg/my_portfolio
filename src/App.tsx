@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <>
       <div className='fixed inset-0 z-[-1]'>
-        <ThreeDBackground type='bg1' />
+        <ThreeDBackground type='hero' />
       </div>
       <div className='min-h-screen overflow-hidden relative'>
         {/* <div className='absolute inset-0 z-0 pointer-events-none'>

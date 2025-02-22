@@ -60,7 +60,7 @@ const Education: React.FC = () => {
       className='relative py-24 px-6 overflow-hidden min-h-screen'
     >
       <div className='absolute inset-0 z-0 pointer-events-none'>
-        <ThreeDBackground type='edu' />
+        <ThreeDBackground type='hero' />
       </div>
 
       <div className='container mx-auto relative z-10'>

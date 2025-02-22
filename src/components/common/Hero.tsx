@@ -15,7 +15,7 @@ const roles = [
   'Full Stack Developer',
   'Software Engineer',
   'React Specialist',
-  'Node.js Expert',
+  'Experienced Node.js Developer',
   'UI/UX Enthusiast',
 ];
 
@@ -163,7 +163,7 @@ const SocialIcon: React.FC<{ href: string; icon: React.ElementType }> = ({
     rel='noopener noreferrer'
     whileHover={{ scale: 1.1, y: -3 }}
     whileTap={{ scale: 0.9 }}
-    className='text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors'
+    className='text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors'
   >
     <Icon size={24} />
   </motion.a>
