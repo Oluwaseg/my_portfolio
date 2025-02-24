@@ -1,32 +1,37 @@
-import React from 'react';
-import ThreeDBackground from './components/3D/ThreeDBackground';
-import About from './components/About';
-import Hero from './components/common/Hero';
-import Navbar from './components/common/Navbar';
+import { useRef } from 'react';
+import Aboutme from './components/Aboutme';
 import Contact from './components/Contact';
-import Education from './components/Education';
-import Footer from './components/Footer';
-import Projects from './components/Projects';
+import Hero from './components/Hero';
+import Navbar from './components/Navbar';
+import Project from './components/Project';
+import ThreeJSBackground from './components/ThreeBG';
 
-const App: React.FC = () => {
+const App = () => {
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+
   return (
-    <>
-      <div className='fixed inset-0 z-[-1]'>
-        <ThreeDBackground type='hero' />
-      </div>
-      <div className='min-h-screen overflow-hidden relative'>
-        {/* <div className='absolute inset-0 z-0 pointer-events-none'>
-        <ThreeDBackground type='bg2' />
-        </div> */}
-        <Navbar />
+    <div className='min-h-screen  text-white relative'>
+      <ThreeJSBackground />
+      <Navbar
+        aboutRef={aboutRef}
+        projectsRef={projectsRef}
+        contactRef={contactRef}
+      />
+      <section id='home'>
         <Hero />
-        <About />
-        <Projects />
-        <Education />
+      </section>
+      <section id='about' ref={aboutRef}>
+        <Aboutme />
+      </section>
+      <section id='projects' ref={projectsRef}>
+        <Project />
+      </section>
+      <section id='contact' ref={contactRef}>
         <Contact />
-        <Footer />
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 

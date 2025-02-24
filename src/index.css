@@ -20,7 +20,7 @@ html {
 }
 body {
   font-family: var(--font-body);
-  @apply bg-gray-900;
+  /* @apply bg-gray-900; */
 }
 
 h1,
