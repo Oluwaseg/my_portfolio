@@ -3,10 +3,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import projects from '../data/projects.json';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Project = {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   category: string;
@@ -50,14 +51,16 @@ function ProjectCard({ project }: { project: Project }) {
         </p>
 
         <div className='flex flex-wrap gap-2 mb-6'>
-          {project.technologies.map((tech, index) => (
-            <span
-              key={index}
-              className='px-2 py-1 bg-gray-700 text-gray-300 text-xs font-medium rounded-md'
-            >
-              {tech}
-            </span>
-          ))}
+          {project.technologies
+            .flatMap((tech) => tech.split(',').map((item) => item.trim()))
+            .map((tech, index) => (
+              <span
+                key={index}
+                className='px-2 py-1 bg-gray-700 text-gray-300 text-xs font-medium rounded-md'
+              >
+                {tech}
+              </span>
+            ))}
         </div>
 
         <div className='flex space-x-4'>
@@ -86,20 +89,47 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 const Project = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [activeTab, setActiveTab] = useState('All');
-  const [filteredProjects, setFilteredProjects] = useState(projects);
-  const categories = [
-    'All',
-    ...new Set(projects.map((project) => project.category)),
-  ];
+  const [categories, setCategories] = useState<string[]>(['All']);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Failed to fetch projects');
+
+        const data: Project[] = await response.json();
+        setProjects(data);
+        setFilteredProjects(data);
+
+        // Extract categories dynamically
+        const uniqueCategories = [
+          'All',
+          ...new Set(data.map((p) => p.category)),
+        ];
+        setCategories(uniqueCategories);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load projects. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     setFilteredProjects(
       activeTab === 'All'
         ? projects
-        : projects.filter((project) => project.category === activeTab)
+        : projects.filter((p) => p.category === activeTab)
     );
-  }, [activeTab]);
+  }, [activeTab, projects]);
 
   return (
     <div className='container mx-auto px-4 py-20 relative overflow-hidden'>
@@ -142,16 +172,26 @@ const Project = () => {
         </div>
       </div>
 
-      <AnimatePresence>
-        <motion.div
-          layout
-          className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10'
-        >
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </motion.div>
-      </AnimatePresence>
+      {loading ? (
+        <div className='text-center text-white text-lg'>
+          Loading projects...
+        </div>
+      ) : error ? (
+        <div className='text-center text-red-500'>{error}</div>
+      ) : filteredProjects.length === 0 ? (
+        <div className='text-center text-white text-lg'>No projects found.</div>
+      ) : (
+        <AnimatePresence>
+          <motion.div
+            layout
+            className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10'
+          >
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      )}
     </div>
   );
 };

@@ -33,7 +33,7 @@ function ContactForm() {
       >
         <label
           htmlFor='name'
-          className='block text-sm font-medium text-gray-300 mb-2'
+          className='block text-sm font-medium text-white mb-2'
         >
           Name
         </label>
@@ -44,7 +44,7 @@ function ContactForm() {
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none 
             focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200
-            text-white placeholder-gray-400'
+            text-white placeholder-gray-50'
           placeholder='John Doe'
           required
           whileFocus={{ scale: 1.02 }}
@@ -58,7 +58,7 @@ function ContactForm() {
       >
         <label
           htmlFor='email'
-          className='block text-sm font-medium text-gray-300 mb-2'
+          className='block text-sm font-medium text-white mb-2'
         >
           Email
         </label>
@@ -83,7 +83,7 @@ function ContactForm() {
       >
         <label
           htmlFor='message'
-          className='block text-sm font-medium text-gray-300 mb-2'
+          className='block text-sm font-medium text-white mb-2'
         >
           Message
         </label>
@@ -131,12 +131,28 @@ function ContactInfo({
         <Icon className='w-6 h-6 text-blue-500' />
       </div>
       <div>
-        <h4 className='text-lg font-medium text-gray-200'>{title}</h4>
-        <p className='text-gray-400'>{content}</p>
+        <h4 className='text-lg font-medium text-white'>{title}</h4>
+        <p className='text-white'>{content}</p>
       </div>
     </div>
   );
 }
+
+const SocialIcon: React.FC<{ href: string; icon: React.ElementType }> = ({
+  href,
+  icon: Icon,
+}) => (
+  <motion.a
+    href={href}
+    target='_blank'
+    rel='noopener noreferrer'
+    whileHover={{ scale: 1.1, y: -3 }}
+    whileTap={{ scale: 0.9 }}
+    className='text-white hover:text-white transition-all duration-200 cursor-pointer'
+  >
+    <Icon size={24} />
+  </motion.a>
+);
 
 function Contact() {
   const ref = useRef(null);
@@ -174,7 +190,7 @@ function Contact() {
           {/* Contact Information */}
           <motion.div className='space-y-8' style={{ y }}>
             <div className='prose prose-invert'>
-              <p className='text-lg text-gray-300 leading-relaxed'>
+              <p className='text-lg text-white leading-relaxed'>
                 I'm always interested in hearing about new projects and
                 opportunities. Whether you have a question or just want to say
                 hi, I'll try my best to get back to you!
@@ -200,38 +216,21 @@ function Contact() {
             </div>
 
             <div className='pt-8'>
-              <h4 className='text-lg font-medium text-gray-200 mb-4'>
-                Follow Me
-              </h4>
-              <div className='flex space-x-4'>
-                <a
-                  href='https://github.com'
-                  className='p-3 bg-gray-800 rounded-lg hover:bg-gray-700 
-                  transition-colors duration-200'
-                >
-                  <Github className='w-5 h-5 text-gray-400 hover:text-white' />
-                </a>
-                <a
-                  href='https://linkedin.com'
-                  className='p-3 bg-gray-800 rounded-lg hover:bg-gray-700 
-                  transition-colors duration-200'
-                >
-                  <Linkedin className='w-5 h-5 text-gray-400 hover:text-white' />
-                </a>
-                <a
-                  href='https://twitter.com'
-                  className='p-3 bg-gray-800 rounded-lg hover:bg-gray-700 
-                  transition-colors duration-200'
-                >
-                  <Twitter className='w-5 h-5 text-gray-400 hover:text-white' />
-                </a>
+              <h4 className='text-lg font-medium text-white mb-4'>Follow Me</h4>
+              <div className='flex space-x-5'>
+                <SocialIcon href='https://github.com/oluwaseg' icon={Github} />
+                <SocialIcon
+                  href='https://linkedin.com/in/samuel-oluwasegun-39ab37253'
+                  icon={Linkedin}
+                />
+                <SocialIcon href='#' icon={Twitter} />
               </div>
             </div>
           </motion.div>
 
           {/* Contact Form */}
           <motion.div
-            className='bg-gray-800 p-8 rounded-xl border border-gray-700'
+            className=' p-8 rounded-xl border border-gray-700'
             style={{ y }}
           >
             <ContactForm />
@@ -252,28 +251,13 @@ function Contact() {
                 Full Stack Developer & Software Architect crafting exceptional
                 digital experiences.
               </p>
-              <div className='flex space-x-4'>
-                <a
-                  href='https://github.com'
-                  className='text-gray-400 hover:text-white 
-                  transition-colors duration-200'
-                >
-                  <Github className='w-5 h-5' />
-                </a>
-                <a
-                  href='https://linkedin.com'
-                  className='text-gray-400 hover:text-white 
-                  transition-colors duration-200'
-                >
-                  <Linkedin className='w-5 h-5' />
-                </a>
-                <a
-                  href='https://twitter.com'
-                  className='text-gray-400 hover:text-white 
-                  transition-colors duration-200'
-                >
-                  <Twitter className='w-5 h-5' />
-                </a>
+              <div className='flex space-x-5'>
+                <SocialIcon href='https://github.com/oluwaseg' icon={Github} />
+                <SocialIcon
+                  href='https://linkedin.com/in/samuel-oluwasegun-39ab37253'
+                  icon={Linkedin}
+                />
+                <SocialIcon href='#' icon={Twitter} />
               </div>
             </div>
 
