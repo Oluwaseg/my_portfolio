@@ -153,13 +153,22 @@ function Contact() {
     <motion.div ref={ref} style={{ opacity, scale }} className='relative'>
       {/* Contact Section */}
       <div className='container mx-auto px-4 py-20 relative overflow-hidden'>
-        {/* Background Accent */}
-        <div className='absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-[128px] opacity-10' />
-
-        <motion.div className='text-center mb-16 relative z-10' style={{ y }}>
-          <h2 className='text-4xl font-bold mb-4'>Get In Touch</h2>
-          <div className='w-20 h-1 bg-blue-500 mx-auto rounded-full' />
-        </motion.div>
+        <div className='text-center mb-16 relative z-10'>
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className='text-5xl font-extrabold mb-4 tracking-tight'
+          >
+            Get In Touch
+          </motion.h2>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className='w-20 h-1 bg-blue-500 mx-auto rounded-full mb-12'
+          />
+        </div>
 
         <div className='grid lg:grid-cols-2 gap-12 relative z-10'>
           {/* Contact Information */}
@@ -176,17 +185,17 @@ function Contact() {
               <ContactInfo
                 icon={Mail}
                 title='Email'
-                content='alex.chen@example.com'
+                content='samueloluwasegun999@gmail.com'
               />
               <ContactInfo
                 icon={Phone}
                 title='Phone'
-                content='+1 (555) 123-4567'
+                content='+2349048095407'
               />
               <ContactInfo
                 icon={MapPin}
                 title='Location'
-                content='San Francisco, CA'
+                content='Lagos, Nigeria'
               />
             </div>
 
@@ -237,7 +246,7 @@ function Contact() {
             {/* About */}
             <div>
               <h3 className='text-xl font-semibold text-white mb-4'>
-                Alex Chen
+                Samuel Oluwasegun
               </h3>
               <p className='text-gray-400 mb-4'>
                 Full Stack Developer & Software Architect crafting exceptional
@@ -309,15 +318,15 @@ function Contact() {
               <ul className='space-y-2'>
                 <li className='flex items-center space-x-2 text-gray-400'>
                   <Mail className='w-4 h-4' />
-                  <span>alex.chen@example.com</span>
+                  <span>samueloluwasegun999@gmail.com</span>
                 </li>
                 <li className='flex items-center space-x-2 text-gray-400'>
                   <Phone className='w-4 h-4' />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+2349048095407</span>
                 </li>
                 <li className='flex items-center space-x-2 text-gray-400'>
                   <MapPin className='w-4 h-4' />
-                  <span>San Francisco, CA</span>
+                  <span>Lagos, Nigeria</span>
                 </li>
               </ul>
             </div>
@@ -325,7 +334,8 @@ function Contact() {
 
           <div className='pt-8 border-t border-gray-700 text-center text-gray-400'>
             <p>
-              &copy; {new Date().getFullYear()} Alex Chen. All rights reserved.
+              &copy; {new Date().getFullYear()} Samuel Oluwasegun. All rights
+              reserved.
             </p>
           </div>
         </div>

@@ -45,6 +45,41 @@ function TechCard({
   );
 }
 
+const hardSkills = [
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Next.js',
+  'Node.js',
+  'Express.js',
+  'MongoDB',
+  'PostgreSQL',
+  'REST APIs',
+  'GraphQL',
+  'Docker',
+  'Kubernetes',
+];
+
+const softSkills = [
+  'Problem-Solving',
+  'Communication',
+  'Teamwork',
+  'Leadership',
+  'Critical Thinking',
+  'Adaptability',
+];
+
+function SkillPill({ skill }: { skill: string }) {
+  return (
+    <motion.span
+      whileHover={{ scale: 1.1 }}
+      className='px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm border border-gray-700 hover:border-blue-500 transition-all'
+    >
+      {skill}
+    </motion.span>
+  );
+}
+
 const Aboutme = () => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -78,9 +113,12 @@ const Aboutme = () => {
             className='prose prose-invert'
           >
             <p className='text-lg text-gray-300 leading-relaxed'>
-              With over 8 years of experience in software development, I
-              specialize in building high-performance web applications and
-              scalable backend systems...
+              My journey into tech began from a non-IT background, and I've
+              embraced every challenge to grow as a developer. Passionate about
+              problem-solving and clean code, I focus on building scalable,
+              high-performing applications. I'm always eager to learn and
+              explore new technologies to push the boundaries of web
+              development.
             </p>
             <p className='text-lg text-gray-300 leading-relaxed mt-4'>
               I'm constantly learning and exploring new technologies...
@@ -98,9 +136,33 @@ const Aboutme = () => {
               <SkillBar name='API Development' color='bg-red-500' />
             </div>
           </div>
+
+          {/* Technical Skills Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className='space-y-6'
+          >
+            <h3 className='text-2xl font-semibold'>Technical Skills</h3>
+            <div className='flex flex-wrap gap-3'>
+              {hardSkills.map((skill, index) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <SkillPill skill={skill} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Right Column - Tech Stack */}
+        {/* Right Column - Tech Stack and Experience */}
         <div className='space-y-8'>
           <h3 className='text-2xl font-semibold'>Tech Stack</h3>
           <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
@@ -146,6 +208,30 @@ const Aboutme = () => {
               </motion.div>
             </div>
           </div>
+
+          {/* Soft Skills Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className='space-y-6'
+          >
+            <h3 className='text-2xl font-semibold'>Soft Skills</h3>
+            <div className='flex flex-wrap gap-3'>
+              {softSkills.map((skill, index) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <SkillPill skill={skill} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </motion.div>
