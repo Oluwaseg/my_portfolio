@@ -1,5 +1,3 @@
-'use client';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -34,6 +32,7 @@ function ProjectCard({ project }: { project: Project }) {
           src={project.image || '/placeholder.svg'}
           alt={project.title}
           className='w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500'
+          loading='lazy'
         />
         <div className='absolute bottom-4 left-4 z-20'>
           <span className='px-3 py-1 bg-blue-500 text-xs font-semibold tracking-wide uppercase rounded-full text-white'>
