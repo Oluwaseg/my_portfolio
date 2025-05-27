@@ -1,7 +1,18 @@
 'use client';
 
+import emailjs from '@emailjs/browser';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import {
+  AlertCircle,
+  CheckCircle,
+  Github,
+  Linkedin,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from 'lucide-react';
 import type React from 'react';
 import { useRef, useState } from 'react';
 
@@ -11,11 +22,82 @@ function ContactForm() {
     email: '',
     message: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setIsLoading(true);
+    setStatus('idle');
+
+    try {
+      // EmailJS configuration
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const autoReplyTemplateId =
+        import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID ||
+        'template_24krlbk';
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error(
+          'EmailJS configuration is missing. Please check your environment variables.'
+        );
+      }
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Samuel Oluwasegun',
+      };
+
+      const autoReplyParams = {
+        to_name: formData.name,
+        to_email: formData.email,
+        from_name: 'Samuel Oluwasegun',
+        reply_to: 'samueloluwasegun999@gmail.com',
+      };
+
+      // Send the main email to you
+      try {
+        await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      } catch (mainEmailError) {
+        throw new Error(
+          'Failed to send main email: ' +
+            (mainEmailError instanceof Error
+              ? mainEmailError.message
+              : String(mainEmailError))
+        );
+      }
+
+      // Send auto-reply to the sender
+      try {
+        await emailjs.send(
+          serviceId,
+          autoReplyTemplateId,
+          autoReplyParams,
+          publicKey
+        );
+      } catch {
+        // Don't throw here - main email was successful
+        // Auto-reply failed, but main email was sent successfully
+      }
+
+      setStatus('success');
+      setStatusMessage(
+        "Message sent successfully! You'll receive a confirmation email shortly."
+      );
+      setFormData({ name: '', email: '', message: '' });
+    } catch {
+      setStatus('error');
+      setStatusMessage(
+        'Failed to send message. Please try again or contact me directly.'
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -42,7 +124,7 @@ function ContactForm() {
           id='name'
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none 
+          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none
             focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200
             text-white placeholder-gray-50'
           placeholder='John Doe'
@@ -67,7 +149,7 @@ function ContactForm() {
           id='email'
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none 
+          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none
             focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200
             text-white placeholder-gray-400'
           placeholder='john@example.com'
@@ -94,7 +176,7 @@ function ContactForm() {
             setFormData({ ...formData, message: e.target.value })
           }
           rows={5}
-          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none 
+          className='w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none
             focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200
             text-white placeholder-gray-400 resize-none'
           placeholder='Your message here...'
@@ -103,14 +185,46 @@ function ContactForm() {
         />
       </motion.div>
 
+      {/* Status Message */}
+      {status !== 'idle' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`flex items-center space-x-2 p-3 rounded-lg ${
+            status === 'success'
+              ? 'bg-green-500 bg-opacity-10 text-green-400 border border-green-500 border-opacity-20'
+              : 'bg-red-500 bg-opacity-10 text-red-400 border border-red-500 border-opacity-20'
+          }`}
+        >
+          {status === 'success' ? (
+            <CheckCircle className='w-5 h-5' />
+          ) : (
+            <AlertCircle className='w-5 h-5' />
+          )}
+          <span className='text-sm'>{statusMessage}</span>
+        </motion.div>
+      )}
+
       <motion.button
         type='submit'
-        className='w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg
-          transition-colors duration-200 transform hover:scale-[1.02]'
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        disabled={isLoading}
+        className={`w-full px-6 py-3 text-white font-medium rounded-lg transition-all duration-200 transform
+          ${
+            isLoading
+              ? 'bg-gray-600 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 hover:scale-[1.02]'
+          }`}
+        whileHover={!isLoading ? { scale: 1.05 } : {}}
+        whileTap={!isLoading ? { scale: 0.95 } : {}}
       >
-        Send Message
+        {isLoading ? (
+          <div className='flex items-center justify-center space-x-2'>
+            <Loader2 className='w-5 h-5 animate-spin' />
+            <span>Sending...</span>
+          </div>
+        ) : (
+          'Send Message'
+        )}
       </motion.button>
     </motion.form>
   );

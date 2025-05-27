@@ -113,12 +113,13 @@ const Aboutme = () => {
             className='prose prose-invert'
           >
             <p className='text-lg text-gray-300 leading-relaxed'>
-              My journey into tech began from a non-IT background, and I've
-              embraced every challenge to grow as a developer. Passionate about
-              problem-solving and clean code, I focus on building scalable,
-              high-performing applications. I'm always eager to learn and
-              explore new technologies to push the boundaries of web
-              development.
+              With a foundation in Computer Engineering, I bring both
+              theoretical knowledge and practical expertise to modern web
+              development. I build full-stack applications using Next.js,
+              Node.js, Express, and integrate scalable databases like PostgreSQL
+              and MongoDB. I'm deeply passionate about clean architecture,
+              efficient APIs, and leveraging tools like Docker, CI/CD, and cloud
+              services to deliver high-performing, production-ready software.
             </p>
             <p className='text-lg text-gray-300 leading-relaxed mt-4'>
               I'm constantly learning and exploring new technologies...
@@ -184,11 +185,13 @@ const Aboutme = () => {
                 className='bg-gray-800 p-6 rounded-xl border border-gray-700'
               >
                 <h4 className='text-xl font-medium text-blue-400'>
-                  Lead Developer
+                  Full Stack Developer
                 </h4>
                 <p className='text-gray-400 mt-2'>
-                  Led a team of 5 developers in building enterprise-scale
-                  applications using React, Node.js, and AWS.
+                  Computer Engineer building full-stack apps with Next.js,
+                  Node.js, and PostgreSQL. I use CI/CD and Docker for efficient
+                  delivery, and I’m focused on writing clean, scalable code
+                  across the stack.
                 </p>
               </motion.div>
               <motion.div
