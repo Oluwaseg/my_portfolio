@@ -41,7 +41,7 @@ const ThreeJSBackground = () => {
     camera.position.z = 5;
 
     // Update sphere position on scroll
-    smoothScrollY.onChange((scrollValue) => {
+    const unsubscribe = smoothScrollY.on('change', (scrollValue) => {
       const targetY = THREE.MathUtils.mapLinear(scrollValue, 0, 500, 0, -3);
       sphere.position.y = THREE.MathUtils.lerp(
         sphere.position.y,
@@ -65,6 +65,7 @@ const ThreeJSBackground = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      unsubscribe();
       window.removeEventListener('resize', handleResize);
       if (mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);

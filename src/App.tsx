@@ -12,23 +12,23 @@ const App = () => {
   const contactRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className='min-h-screen  text-white relative'>
+    <div className='min-h-screen text-white relative'>
       <ThreeJSBackground />
       <Navbar
         aboutRef={aboutRef}
         projectsRef={projectsRef}
         contactRef={contactRef}
       />
-      <section id='home'>
+      <section id='home' className='relative'>
         <Hero />
       </section>
-      <section id='about' ref={aboutRef}>
+      <section id='about' ref={aboutRef} className='relative'>
         <Aboutme />
       </section>
-      <section id='projects' ref={projectsRef}>
+      <section id='projects' ref={projectsRef} className='relative'>
         <Project />
       </section>
-      <section id='contact' ref={contactRef}>
+      <section id='contact' ref={contactRef} className='relative'>
         <Contact />
       </section>
     </div>
